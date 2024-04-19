@@ -20,6 +20,21 @@ namespace src
         }
     }
 
+    public class DeansOffice
+    {
+        public Student[] students;
+
+        public Student[] SortStudent(Student[] students)
+        {
+            var newStudent = students.OrderBy(x => x.Surname).ThenBy(x=>x.Name).ToArray();
+
+            return newStudent;
+        }
+
+
+
+    }
+
 
     class Program
     {
