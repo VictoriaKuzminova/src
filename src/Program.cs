@@ -34,15 +34,13 @@ namespace src
             return newStudent;
         }
 
-        public void WriteFile(string file, Student[] students)
+        public void WriteFile( Student[] students)
         {
-            using (StreamWriter wr = new StreamWriter(File.Open(file, FileMode.Open)))
+            using (StreamWriter wr = new StreamWriter("data.txt", false, System.Text.Encoding.UTF8))
             {
                 foreach (Student student in students)
                 {
-                    wr.Write(student.Surname);
-                    wr.Write(student.Name);
-                    wr.Write(student.NumZachetka);
+                    wr.WriteLine(student.Surname+";"+ student.Name+";"+ student.NumZachetka);
                 }
                 Console.WriteLine("Информация успешно записана в файл!");
             }
@@ -57,6 +55,15 @@ namespace src
             return student;
         }
 
+        public static void Input(Student[] students)
+        {
+
+           for(int i=0;i<students.Length;i++)
+            {
+                Console.WriteLine( students[i].Surname);
+                Console.WriteLine(students[i].Name);
+            }
+        }
         static void Main(string[] args)
         {
             int count = 0;
@@ -81,20 +88,30 @@ namespace src
                 var Surname = Console.ReadLine();
                 Console.Write("\t- введите имя: ");
                 var Name = Console.ReadLine();
-                Console.Write("\t- введите номер зачетки: ");
-                var NumZachetka = int.Parse(Console.ReadLine());
-
+                var NumZachetka = 0;
+                while (true)
+                {
+                    try
+                    {
+                        Console.Write("\t- введите номер зачетки: ");
+                        NumZachetka = int.Parse(Console.ReadLine());
+                        if ((NumZachetka < 1)) { throw new Exception(); }
+                        break;
+                    }
+                    catch { }
+                }
                 students[i] = AddStudent(Surname, Name, NumZachetka);
             }
             
-            Console.Write("Введите имя файла для хранения данных о студентах: ");
-            string nameFile = Console.ReadLine();
-
+            
             DeansOffice deansOffice = new DeansOffice();
 
             deansOffice.students = students;
-            deansOffice.SortStudent(students);
-            deansOffice.WriteFile(nameFile, students);
+
+            /*Input(deansOffice.SortStudent(students));
+            Console.ReadLine();*/
+
+            deansOffice.WriteFile( deansOffice.SortStudent(students));
 
 
         }
