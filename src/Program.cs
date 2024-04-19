@@ -72,7 +72,30 @@ namespace src
                 catch { }
             }
 
+            Student[] students = new Student[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                Console.WriteLine($"Ввод информации о СТУДЕНТЕ № {i + 1}");
+                Console.Write("\t- введите фамилию: ");
+                var Surname = Console.ReadLine();
+                Console.Write("\t- введите имя: ");
+                var Name = Console.ReadLine();
+                Console.Write("\t- введите номер зачетки: ");
+                var NumZachetka = int.Parse(Console.ReadLine());
+
+                students[i] = AddStudent(Surname, Name, NumZachetka);
+            }
             
+            Console.Write("Введите имя файла для хранения данных о студентах: ");
+            string nameFile = Console.ReadLine();
+
+            DeansOffice deansOffice = new DeansOffice();
+
+            deansOffice.students = students;
+            deansOffice.SortStudent(students);
+            deansOffice.WriteFile(nameFile, students);
+
 
         }
     }
