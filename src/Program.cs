@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,22 +25,41 @@ namespace src
     {
         public Student[] students;
 
+
+
         public Student[] SortStudent(Student[] students)
         {
-            var newStudent = students.OrderBy(x => x.Surname).ThenBy(x=>x.Name).ToArray();
+            var newStudent = students.OrderBy(x => x.Surname).ThenBy(x => x.Name).ToArray();
 
             return newStudent;
         }
 
-
-
+        public void WriteFile(string file, Student[] students)
+        {
+            using (StreamWriter wr = new StreamWriter(File.Open(file, FileMode.Open)))
+            {
+                foreach (Student student in students)
+                {
+                    wr.Write(student.Surname);
+                    wr.Write(student.Name);
+                    wr.Write(student.NumZachetka);
+                }
+                Console.WriteLine("Информация успешно записана в файл!");
+            }
+        }
     }
-
 
     class Program
     {
+        public static Student AddStudent(string surname, string name, int numZach)
+        {
+            Student student= new Student(surname, name, numZach);
+            return student;
+        }
+
         static void Main(string[] args)
         {
+          
         }
     }
 }
