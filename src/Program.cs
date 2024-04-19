@@ -59,7 +59,21 @@ namespace src
 
         static void Main(string[] args)
         {
-          
+            int count = 0;
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Введите кол-во студентов для обработки из диапазона от 1 до 20: ");
+                    count = int.Parse(Console.ReadLine());
+                    if ((count < 1) || (count > 20)) { throw new Exception(); }
+                    break;
+                }
+                catch { }
+            }
+
+            
+
         }
     }
 }
